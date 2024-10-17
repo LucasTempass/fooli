@@ -26,7 +26,7 @@ non terminal class_body_declarations;
 non terminal class_member_declaration;
 non terminal field_declaration;
 non terminal method_declaration;
-non terminal  method_parameter_list, method_parameter_list_opt;
+non terminal method_parameter_list, method_parameter_list_opt;
 non terminal method_statements, method_statement;
 non terminal if_statement, else_opt;
 non terminal return_statement;
@@ -51,7 +51,7 @@ start with goal;
 
 goal ::= class_declaration;
 
-literal ::=	INTEGER_LITERAL | BOOLEAN_LITERAL;
+literal ::= INTEGER_LITERAL | BOOLEAN_LITERAL;
 
 // tipagem
 primitive_type ::= INT | BOOLEAN;
@@ -88,9 +88,7 @@ argument_list_opt ::= | argument_list;
 // comandos
 method_invocation_statement ::= method_invocation SEMICOLON;
 
-if_statement ::= IF LPAREN expression RPAREN method_statements else_opt;
-
-else_opt ::= | ELSE method_statements;
+if_statement ::= IF LPAREN expression RPAREN method_statements ELSE method_statements;
 
 return_statement ::= RETURN expression_opt SEMICOLON;
 
