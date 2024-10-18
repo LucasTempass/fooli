@@ -1,7 +1,7 @@
 class Fool {
 
-    int main() {
-        return 0;
+    void main() {
+        return;
     }
 
 }

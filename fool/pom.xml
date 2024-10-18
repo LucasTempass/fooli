@@ -46,7 +46,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <!--interface="true" locations="false" parser="LexParse"-->
+                    <generatedSourcesDirectory>src/main/java</generatedSourcesDirectory>
                     <symbolInterface>true</symbolInterface>
                     <parserName>LexParse</parserName>
                 </configuration>
