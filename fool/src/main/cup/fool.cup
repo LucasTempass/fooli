@@ -19,7 +19,6 @@ non terminal goal;
 
 non terminal literal;
 non terminal primitive_type;
-non terminal class_type;
 non terminal class_declaration;
 non terminal class_body;
 non terminal class_body_declarations;
@@ -28,24 +27,20 @@ non terminal field_declaration;
 non terminal method_declaration;
 non terminal method_parameter_list, method_parameter_list_opt;
 non terminal method_statements, method_statement;
-non terminal if_statement, else_opt;
+non terminal if_statement;
 non terminal return_statement;
 non terminal assignment_statement;
 non terminal method_invocation_statement;
 non terminal expression, expression_opt;
 non terminal argument_list, argument_list_opt;
 non terminal method_invocation;
-non terminal arithmetic_expression;
 non terminal equality_expression;
 non terminal boolean_expression;
+non terminal boolean_and_expression;
+non terminal unary_expression;
+non terminal multiplicative_expression;
+non terminal additive_expression;
 
-precedence left OR;
-precedence left AND;
-precedence left EQEQ, NOTEQ;
-precedence left PLUS;
-precedence left MULT;
-precedence left NOT;
-precedence left IF, ELSE;
 
 start with goal;
 
@@ -92,15 +87,22 @@ if_statement ::= IF LPAREN expression RPAREN method_statements ELSE method_state
 
 return_statement ::= RETURN expression_opt SEMICOLON;
 
-expression_opt ::= expression | ;
-
 assignment_statement ::= IDENTIFIER EQ expression SEMICOLON;
 
 // expressões
-arithmetic_expression ::= expression PLUS expression | expression MULT expression;
+unary_expression ::= literal | method_invocation | IDENTIFIER | NOT unary_expression;
 
-equality_expression ::= expression EQEQ expression | expression NOTEQ expression;
+multiplicative_expression ::= unary_expression | multiplicative_expression MULT unary_expression;
 
-boolean_expression ::= expression AND expression | expression OR expression | NOT expression;
+additive_expression ::= multiplicative_expression |	additive_expression PLUS multiplicative_expression;
 
-expression ::= IDENTIFIER | literal | arithmetic_expression | boolean_expression | equality_expression | method_invocation;
+equality_expression ::= additive_expression | equality_expression EQEQ additive_expression | equality_expression NOTEQ additive_expression;
+
+boolean_and_expression ::= equality_expression | boolean_and_expression AND equality_expression;
+
+boolean_expression ::= boolean_and_expression | boolean_expression OR boolean_and_expression;
+
+expression ::= boolean_expression;
+
+expression_opt ::= expression | ;
+
