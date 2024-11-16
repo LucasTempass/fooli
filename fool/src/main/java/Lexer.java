@@ -745,14 +745,7 @@ public class Lexer implements java_cup.runtime.Scanner {
       if (zzInput == YYEOF && zzStartRead == zzCurrentPos) {
         zzAtEOF = true;
             zzDoEOF();
-            switch (zzLexicalState) {
-            case YYINITIAL: {
-              return null;
-            }  // fall though
-            case 62: break;
-            default:
           { return new java_cup.runtime.Symbol(sym.EOF); }
-        }
       }
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
