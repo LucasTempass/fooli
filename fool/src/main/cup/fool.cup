@@ -27,7 +27,7 @@ non terminal field_declaration;
 non terminal method_declaration;
 non terminal method_parameter_list, method_parameter_list_opt;
 non terminal method_statements, method_statement;
-non terminal if_statement;
+non terminal if_statement, if_else_statement;
 non terminal return_statement;
 non terminal assignment_statement;
 non terminal method_invocation_statement;
@@ -40,7 +40,7 @@ non terminal boolean_and_expression;
 non terminal unary_expression;
 non terminal multiplicative_expression;
 non terminal additive_expression;
-
+non terminal method_header;
 
 start with goal;
 
@@ -63,7 +63,9 @@ class_member_declaration ::= field_declaration | method_declaration;
 field_declaration ::= primitive_type IDENTIFIER SEMICOLON;
 
 // declaração de método
-method_declaration ::= primitive_type IDENTIFIER LPAREN method_parameter_list_opt RPAREN LBRACE method_statements RBRACE | VOID IDENTIFIER LPAREN method_parameter_list_opt RPAREN LBRACE method_statements RBRACE;
+method_declaration ::= method_header LBRACE method_statements RBRACE;
+
+method_header ::= primitive_type IDENTIFIER LPAREN method_parameter_list_opt RPAREN | VOID IDENTIFIER LPAREN method_parameter_list_opt RPAREN;
 
 method_parameter_list ::= primitive_type IDENTIFIER | method_parameter_list COMMA primitive_type IDENTIFIER;
 
@@ -71,7 +73,7 @@ method_parameter_list_opt ::= | method_parameter_list;
 
 method_statements ::= method_statement | method_statements method_statement;
 
-method_statement ::= assignment_statement | method_invocation_statement | return_statement | if_statement;
+method_statement ::= assignment_statement | method_invocation_statement | return_statement | if_statement | if_else_statement;
 
 // chamada de método
 method_invocation ::= IDENTIFIER LPAREN argument_list_opt RPAREN;
@@ -83,7 +85,9 @@ argument_list_opt ::= | argument_list;
 // comandos
 method_invocation_statement ::= method_invocation SEMICOLON;
 
-if_statement ::= IF LPAREN expression RPAREN method_statements ELSE method_statements;
+if_statement ::= IF LPAREN expression RPAREN method_statement;
+
+if_else_statement ::= if_statement ELSE method_statement;
 
 return_statement ::= RETURN expression_opt SEMICOLON;
 
