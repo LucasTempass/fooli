@@ -27,7 +27,8 @@ non terminal field_declaration;
 non terminal method_declaration;
 non terminal method_parameter_list, method_parameter_list_opt;
 non terminal method_statements, method_statement;
-non terminal if_statement, if_else_statement;
+non terminal if_statement, if_else_statement, if_else_statement_no_if;
+non terminal statement_no_if;
 non terminal return_statement;
 non terminal assignment_statement;
 non terminal method_invocation_statement;
@@ -41,6 +42,7 @@ non terminal unary_expression;
 non terminal multiplicative_expression;
 non terminal additive_expression;
 non terminal method_header;
+non terminal single_line_statement;
 
 start with goal;
 
@@ -73,7 +75,11 @@ method_parameter_list_opt ::= | method_parameter_list;
 
 method_statements ::= method_statement | method_statements method_statement;
 
-method_statement ::= assignment_statement | method_invocation_statement | return_statement | if_statement | if_else_statement;
+method_statement ::= assignment_statement | return_statement | if_statement | if_else_statement;
+
+if_statement ::= IF LPAREN expression RPAREN method_statement;
+
+if_else_statement ::= IF LPAREN expression RPAREN method_statement ELSE method_statement;
 
 // chamada de método
 method_invocation ::= IDENTIFIER LPAREN argument_list_opt RPAREN;
@@ -84,10 +90,6 @@ argument_list_opt ::= | argument_list;
 
 // comandos
 method_invocation_statement ::= method_invocation SEMICOLON;
-
-if_statement ::= IF LPAREN expression RPAREN method_statement;
-
-if_else_statement ::= if_statement ELSE method_statement;
 
 return_statement ::= RETURN expression_opt SEMICOLON;
 
