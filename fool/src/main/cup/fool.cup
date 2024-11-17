@@ -6,6 +6,7 @@ terminal BOOLEAN;
 terminal INT;
 terminal VOID;
 terminal IF, ELSE;
+terminal WHILE;
 terminal RETURN;
 terminal PLUS, MULT;
 terminal AND, OR, NOT;
@@ -42,6 +43,7 @@ non terminal multiplicative_expression;
 non terminal additive_expression;
 non terminal method_header;
 non terminal else_statement_opt;
+non terminal while_statement;
 
 start with goal;
 
@@ -74,13 +76,15 @@ method_parameter_list_opt ::= | method_parameter_list;
 
 method_statements ::= method_statement | method_statements method_statement;
 
-method_statement ::= if_statement | simple_statement;
+method_statement ::= if_statement | while_statement | simple_statement;
 
 simple_statement ::= method_invocation_statement | return_statement | assignment_statement;
 
 if_statement ::= IF LPAREN expression RPAREN simple_statement else_statement_opt;
 
 else_statement_opt ::= ELSE method_statement | ;
+
+while_statement ::= WHILE LPAREN expression RPAREN simple_statement;
 
 // chamada de método
 method_invocation ::= IDENTIFIER LPAREN argument_list_opt RPAREN;
