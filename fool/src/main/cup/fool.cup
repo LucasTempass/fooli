@@ -80,7 +80,7 @@ simple_statement ::= method_invocation_statement | return_statement | assignment
 
 if_statement ::= IF LPAREN expression RPAREN simple_statement else_statement_opt;
 
-else_statement_opt ::= ELSE simple_statement | ;
+else_statement_opt ::= ELSE method_statement | ;
 
 // chamada de método
 method_invocation ::= IDENTIFIER LPAREN argument_list_opt RPAREN;
