@@ -27,7 +27,7 @@ non terminal class_member_declaration;
 non terminal field_declaration;
 non terminal method_declaration;
 non terminal method_parameter_list, method_parameter_list_opt;
-non terminal method_statements, method_statement, simple_statement;
+non terminal method_statements, method_statement;
 non terminal if_statement, if_else_statement;
 non terminal return_statement;
 non terminal assignment_statement;
@@ -76,15 +76,13 @@ method_parameter_list_opt ::= | method_parameter_list;
 
 method_statements ::= method_statement | method_statements method_statement;
 
-method_statement ::= if_statement | while_statement | simple_statement;
+method_statement ::= if_statement | while_statement | method_invocation_statement | return_statement | assignment_statement;
 
-simple_statement ::= method_invocation_statement | return_statement | assignment_statement;
+if_statement ::= IF LPAREN expression RPAREN LBRACE method_statement RBRACE else_statement_opt;
 
-if_statement ::= IF LPAREN expression RPAREN simple_statement else_statement_opt;
+else_statement_opt ::= ELSE LBRACE method_statement RBRACE | ;
 
-else_statement_opt ::= ELSE method_statement | ;
-
-while_statement ::= WHILE LPAREN expression RPAREN simple_statement;
+while_statement ::= WHILE LPAREN expression RPAREN method_statement;
 
 // chamada de método
 method_invocation ::= IDENTIFIER LPAREN argument_list_opt RPAREN;
