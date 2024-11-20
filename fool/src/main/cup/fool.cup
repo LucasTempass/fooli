@@ -1,4 +1,15 @@
 import java_cup.runtime.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+parser code {:
+
+Map<String, Object> declarations = new HashMap<>();
+
+:};
+
+
 
 terminal CLASS;
 terminal SEMICOLON, COMMA, LBRACE, RBRACE, EQ, LPAREN, RPAREN;
@@ -55,7 +66,11 @@ literal ::= INTEGER_LITERAL | BOOLEAN_LITERAL;
 primitive_type ::= INT | BOOLEAN;
 
 // declaração de classe
-class_declaration ::= CLASS IDENTIFIER class_body;
+class_declaration ::= CLASS IDENTIFIER:id class_body
+                      {:
+                          declarations.put(id, UUID.randomUUID().toString());
+                          System.out.println("Class declaration: " + id);
+                      :};
 
 class_body ::= LBRACE class_body_declarations RBRACE;
 
@@ -63,12 +78,25 @@ class_body_declarations ::= class_member_declaration | class_body_declarations c
 
 class_member_declaration ::= field_declaration | method_declaration;
 
-field_declaration ::= primitive_type IDENTIFIER SEMICOLON;
+field_declaration ::= primitive_type:type IDENTIFIER:id SEMICOLON
+                      {:
+                          declarations.put(id, UUID.randomUUID().toString());
+                          System.out.println("Field declaration: " + id + " of type " + type);
+                      :};
 
 // declaração de método
 method_declaration ::= method_header LBRACE method_statements RBRACE;
 
-method_header ::= primitive_type IDENTIFIER LPAREN method_parameter_list_opt RPAREN | VOID IDENTIFIER LPAREN method_parameter_list_opt RPAREN;
+method_header ::= primitive_type:type IDENTIFIER:id LPAREN method_parameter_list_opt RPAREN
+                  {:
+                      declarations.put(id, UUID.randomUUID().toString());
+                      System.out.println("Method declaration: " + id + " with return type " + type);
+                  :}
+                | VOID IDENTIFIER:id LPAREN method_parameter_list_opt RPAREN
+                  {:
+                      declarations.put(id, UUID.randomUUID().toString());
+                      System.out.println("Method declaration: " + id + " with return type void");
+                  :};
 
 method_parameter_list ::= primitive_type IDENTIFIER | method_parameter_list COMMA primitive_type IDENTIFIER;
 
@@ -114,4 +142,3 @@ boolean_expression ::= boolean_and_expression | boolean_expression OR boolean_an
 expression ::= boolean_expression;
 
 expression_opt ::= expression | ;
-

@@ -4,6 +4,9 @@
 //----------------------------------------------------
 
 import java_cup.runtime.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -245,6 +248,12 @@ public class LexParse extends java_cup.runtime.lr_parser {
   public int error_sym() {return 1;}
 
 
+
+
+Map<String, Object> declarations = new HashMap<>();
+
+
+
 /** Cup generated class to encapsulate user supplied action code.*/
 @SuppressWarnings({"rawtypes", "unchecked", "unused"})
 class CUP$LexParse$actions {
@@ -332,7 +341,13 @@ class CUP$LexParse$actions {
           case 6: // class_declaration ::= CLASS IDENTIFIER class_body 
             {
               Object RESULT =null;
-
+		int idleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).right;
+		java.lang.String id = (java.lang.String)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).value;
+		
+                          declarations.put(id, UUID.randomUUID().toString());
+                          System.out.println("Class declaration: " + id);
+                      
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("class_declaration",3, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -386,7 +401,16 @@ class CUP$LexParse$actions {
           case 12: // field_declaration ::= primitive_type IDENTIFIER SEMICOLON 
             {
               Object RESULT =null;
-
+		int typeleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).left;
+		int typeright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).right;
+		Object type = (Object)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).value;
+		int idleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).right;
+		java.lang.String id = (java.lang.String)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).value;
+		
+                          declarations.put(id, UUID.randomUUID().toString());
+                          System.out.println("Field declaration: " + id + " of type " + type);
+                      
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("field_declaration",7, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -404,7 +428,16 @@ class CUP$LexParse$actions {
           case 14: // method_header ::= primitive_type IDENTIFIER LPAREN method_parameter_list_opt RPAREN 
             {
               Object RESULT =null;
-
+		int typeleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-4)).left;
+		int typeright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-4)).right;
+		Object type = (Object)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-4)).value;
+		int idleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).right;
+		java.lang.String id = (java.lang.String)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).value;
+		
+                      declarations.put(id, UUID.randomUUID().toString());
+                      System.out.println("Method declaration: " + id + " with return type " + type);
+                  
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("method_header",29, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-4)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -413,7 +446,13 @@ class CUP$LexParse$actions {
           case 15: // method_header ::= VOID IDENTIFIER LPAREN method_parameter_list_opt RPAREN 
             {
               Object RESULT =null;
-
+		int idleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).right;
+		java.lang.String id = (java.lang.String)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).value;
+		
+                      declarations.put(id, UUID.randomUUID().toString());
+                      System.out.println("Method declaration: " + id + " with return type void");
+                  
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("method_header",29, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-4)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
