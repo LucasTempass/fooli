@@ -406,7 +406,7 @@ class CUP$LexParse$actions {
 		int idleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).right;
 		java.lang.String id = (java.lang.String)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).value;
-
+		 program.enter(id); 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("field_declaration",7, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -427,7 +427,7 @@ class CUP$LexParse$actions {
 		int idleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).right;
 		java.lang.String id = (java.lang.String)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).value;
-
+		 program.enter(id); 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("method_header",29, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-4)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -439,7 +439,7 @@ class CUP$LexParse$actions {
 		int idleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).right;
 		java.lang.String id = (java.lang.String)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).value;
-
+		 program.enter(id); 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("method_header",29, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-4)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -583,6 +583,9 @@ class CUP$LexParse$actions {
           case 31: // method_invocation ::= IDENTIFIER LPAREN argument_list_opt RPAREN 
             {
               Operand RESULT =null;
+		int idleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).right;
+		java.lang.String id = (java.lang.String)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).value;
 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("method_invocation",22, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }

@@ -73,13 +73,13 @@ class_body_declarations ::= class_member_declaration | class_body_declarations c
 
 class_member_declaration ::= field_declaration | method_declaration;
 
-field_declaration ::= primitive_type IDENTIFIER:id SEMICOLON;
+field_declaration ::= primitive_type IDENTIFIER:id SEMICOLON {: program.enter(id); :};
 
 // declaração de método
 method_declaration ::= method_header LBRACE method_statements RBRACE;
 
-method_header ::= primitive_type IDENTIFIER:id LPAREN method_parameter_list_opt RPAREN
-| VOID IDENTIFIER:id LPAREN method_parameter_list_opt RPAREN;
+method_header ::= primitive_type IDENTIFIER:id LPAREN method_parameter_list_opt RPAREN {: program.enter(id); :}
+| VOID IDENTIFIER:id LPAREN method_parameter_list_opt RPAREN {: program.enter(id); :};
 
 method_parameter_list ::= primitive_type IDENTIFIER
 | method_parameter_list COMMA primitive_type IDENTIFIER;
@@ -97,7 +97,7 @@ else_statement_opt ::= ELSE LBRACE method_statement RBRACE | ;
 while_statement ::= WHILE LPAREN expression RPAREN method_statement;
 
 // chamada de método
-method_invocation ::= IDENTIFIER LPAREN argument_list_opt RPAREN;
+method_invocation ::= IDENTIFIER:id LPAREN argument_list_opt RPAREN;
 
 argument_list ::= expression | argument_list COMMA expression;
 
