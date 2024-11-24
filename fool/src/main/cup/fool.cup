@@ -88,7 +88,11 @@ method_parameter_list_opt ::= | method_parameter_list;
 
 method_statements ::= method_statement | method_statements method_statement;
 
-method_statement ::= if_statement | while_statement | method_invocation_statement | return_statement | assignment_statement;
+method_statement ::= if_statement
+| while_statement
+| method_invocation_statement
+| return_statement
+| assignment_statement;
 
 if_statement ::= IF LPAREN expression RPAREN LBRACE method_statement RBRACE else_statement_opt;
 

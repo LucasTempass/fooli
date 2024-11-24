@@ -1,7 +1,10 @@
 class Fool {
 
-    void main() {
-        return;
+    int a;
+
+    int main() {
+        a = 1 + 2 * 4 + 2;
+        return a;
     }
 
 }

@@ -24,8 +24,8 @@ public class TACGenerator {
 		return new Operand("t" + (tempCounter++));
 	}
 
-	private String newLabel() {
-		return "L" + (labelCounter++);
+	private Operand generateLabel() {
+		return new Operand("L" + (labelCounter++));
 	}
 
 	public Operand generateBinaryOp(String op, Operand arg1, Operand arg2) {
@@ -77,7 +77,6 @@ public class TACGenerator {
 	public Operand generateLiteral(Boolean value) {
 		return new Operand(Boolean.toString(value));
 	}
-
 
 }
 
