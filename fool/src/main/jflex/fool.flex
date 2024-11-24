@@ -45,6 +45,7 @@ WhiteSpace = \s
   "else"                         { return symbol(sym.ELSE); }
   "int"                          { return symbol(sym.INT); }
   "if"                           { return symbol(sym.IF); }
+  "while"                        { return symbol(sym.WHILE); }
   "return"                       { return symbol(sym.RETURN); }
   "void"                         { return symbol(sym.VOID); }
 
