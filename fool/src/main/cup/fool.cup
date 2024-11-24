@@ -2,6 +2,12 @@ import java_cup.runtime.*;
 import java.util.*;
 import tac.*;
 
+parser code {:
+
+    TACGenerator program = new TACGenerator();
+
+:}
+
 terminal CLASS;
 terminal SEMICOLON, COMMA, LBRACE, RBRACE, EQ, LPAREN, RPAREN;
 terminal BOOLEAN;
@@ -18,9 +24,9 @@ terminal java.lang.Integer INTEGER_LITERAL;
 terminal java.lang.Boolean BOOLEAN_LITERAL;
 terminal java.lang.String IDENTIFIER;
 
-non terminal goal;
+non terminal TACGenerator goal;
 
-non terminal literal;
+non terminal Operand literal;
 non terminal primitive_type;
 non terminal class_declaration;
 non terminal class_body;
@@ -34,30 +40,32 @@ non terminal if_statement, if_else_statement;
 non terminal return_statement;
 non terminal assignment_statement;
 non terminal method_invocation_statement;
-non terminal expression, expression_opt;
+non terminal Operand expression;
+non terminal expression_opt;
 non terminal argument_list, argument_list_opt;
-non terminal method_invocation;
-non terminal equality_expression;
-non terminal boolean_expression;
-non terminal boolean_and_expression;
-non terminal unary_expression;
-non terminal multiplicative_expression;
-non terminal additive_expression;
+non terminal Operand method_invocation;
+non terminal Operand equality_expression;
+non terminal Operand boolean_expression;
+non terminal Operand boolean_and_expression;
+non terminal Operand unary_expression;
+non terminal Operand multiplicative_expression;
+non terminal Operand additive_expression;
 non terminal method_header;
 non terminal else_statement_opt;
 non terminal while_statement;
 
 start with goal;
 
-goal ::= class_declaration;
+goal ::= class_declaration {: RESULT = program; :};
 
-literal ::= INTEGER_LITERAL | BOOLEAN_LITERAL;
+literal ::= INTEGER_LITERAL:i {: RESULT = program.generateLiteral(i); :}
+| BOOLEAN_LITERAL:b {: RESULT = program.generateLiteral(b); :};
 
 // tipagem
 primitive_type ::= INT | BOOLEAN;
 
 // declaração de classe
-class_declaration ::= CLASS IDENTIFIER class_body;
+class_declaration ::= CLASS IDENTIFIER:id class_body {: program.enter(id); :};
 
 class_body ::= LBRACE class_body_declarations RBRACE;
 
@@ -65,15 +73,16 @@ class_body_declarations ::= class_member_declaration | class_body_declarations c
 
 class_member_declaration ::= field_declaration | method_declaration;
 
-field_declaration ::= primitive_type IDENTIFIER SEMICOLON;
+field_declaration ::= primitive_type IDENTIFIER:id SEMICOLON;
 
 // declaração de método
 method_declaration ::= method_header LBRACE method_statements RBRACE;
 
-method_header ::= primitive_type IDENTIFIER LPAREN method_parameter_list_opt RPAREN
-                | VOID IDENTIFIER LPAREN method_parameter_list_opt RPAREN;
+method_header ::= primitive_type IDENTIFIER:id LPAREN method_parameter_list_opt RPAREN
+| VOID IDENTIFIER:id LPAREN method_parameter_list_opt RPAREN;
 
-method_parameter_list ::= primitive_type IDENTIFIER | method_parameter_list COMMA primitive_type IDENTIFIER;
+method_parameter_list ::= primitive_type IDENTIFIER
+| method_parameter_list COMMA primitive_type IDENTIFIER;
 
 method_parameter_list_opt ::= | method_parameter_list;
 
@@ -99,21 +108,30 @@ method_invocation_statement ::= method_invocation SEMICOLON;
 
 return_statement ::= RETURN expression_opt SEMICOLON;
 
-assignment_statement ::= IDENTIFIER EQ expression SEMICOLON;
+assignment_statement ::= IDENTIFIER:id EQ expression:e SEMICOLON {: program.generateAssignment(id, e); :};
 
 // expressões
-unary_expression ::= literal | method_invocation | IDENTIFIER | NOT unary_expression;
+unary_expression ::= literal:l {: RESULT = l; :}
+| method_invocation {: RESULT = new Operand(""); :}
+| IDENTIFIER:id {: RESULT = program.lookup(id); :}
+| NOT unary_expression:e {: RESULT = program.generateUnaryOp("!", e); :};
 
-multiplicative_expression ::= unary_expression | multiplicative_expression MULT unary_expression;
+multiplicative_expression ::= unary_expression:e {: RESULT = e; :}
+| multiplicative_expression:first MULT unary_expression:second {: RESULT = program.generateBinaryOp("*", first, second); :};
 
-additive_expression ::= multiplicative_expression |	additive_expression PLUS multiplicative_expression;
+additive_expression ::= multiplicative_expression:e {: RESULT = e; :}
+| additive_expression:first PLUS multiplicative_expression:second {: RESULT = program.generateBinaryOp("+", first, second); :};
 
-equality_expression ::= additive_expression | equality_expression EQEQ additive_expression | equality_expression NOTEQ additive_expression;
+equality_expression ::= additive_expression:e {: RESULT = e; :}
+| equality_expression:first EQEQ additive_expression:second {: RESULT = program.generateBinaryOp("==", first, second); :}
+| equality_expression:first NOTEQ additive_expression:second {: RESULT = program.generateBinaryOp("!=", first, second); :};
 
-boolean_and_expression ::= equality_expression | boolean_and_expression AND equality_expression;
+boolean_and_expression ::= equality_expression:e {: RESULT = e; :}
+| boolean_and_expression:first AND equality_expression:second {: RESULT = program.generateBinaryOp("&&", first, second); :};
 
-boolean_expression ::= boolean_and_expression | boolean_expression OR boolean_and_expression;
+boolean_expression ::= boolean_and_expression:e {: RESULT = e; :}
+| boolean_expression:first OR boolean_and_expression:second {: RESULT = program.generateBinaryOp("||", first, second); :};
 
-expression ::= boolean_expression;
+expression ::= boolean_expression:e {: RESULT = e; :};
 
 expression_opt ::= expression | ;

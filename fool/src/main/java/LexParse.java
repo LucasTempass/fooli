@@ -5,6 +5,7 @@
 
 import java_cup.runtime.*;
 import java.util.*;
+import tac.*;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20160615 (GIT 4ac7450) generated parser.
@@ -246,6 +247,12 @@ public class LexParse extends java_cup.runtime.lr_parser {
   public int error_sym() {return 1;}
 
 
+
+
+    TACGenerator program = new TACGenerator();
+
+
+
 /** Cup generated class to encapsulate user supplied action code.*/
 @SuppressWarnings({"rawtypes", "unchecked", "unused"})
 class CUP$LexParse$actions {
@@ -276,7 +283,7 @@ class CUP$LexParse$actions {
               Object RESULT =null;
 		int start_valleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).left;
 		int start_valright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).right;
-		Object start_val = (Object)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).value;
+		TACGenerator start_val = (TACGenerator)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).value;
 		RESULT = start_val;
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("$START",0, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
@@ -287,8 +294,8 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 1: // goal ::= class_declaration 
             {
-              Object RESULT =null;
-
+              TACGenerator RESULT =null;
+		 RESULT = program; 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("goal",0, ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -296,8 +303,11 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 2: // literal ::= INTEGER_LITERAL 
             {
-              Object RESULT =null;
-
+              Operand RESULT =null;
+		int ileft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).left;
+		int iright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).right;
+		java.lang.Integer i = (java.lang.Integer)((java_cup.runtime.Symbol) CUP$LexParse$stack.peek()).value;
+		 RESULT = program.generateLiteral(i); 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("literal",1, ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -305,8 +315,11 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 3: // literal ::= BOOLEAN_LITERAL 
             {
-              Object RESULT =null;
-
+              Operand RESULT =null;
+		int bleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).left;
+		int bright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).right;
+		java.lang.Boolean b = (java.lang.Boolean)((java_cup.runtime.Symbol) CUP$LexParse$stack.peek()).value;
+		 RESULT = program.generateLiteral(b); 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("literal",1, ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -333,7 +346,10 @@ class CUP$LexParse$actions {
           case 6: // class_declaration ::= CLASS IDENTIFIER class_body 
             {
               Object RESULT =null;
-
+		int idleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).right;
+		java.lang.String id = (java.lang.String)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).value;
+		 program.enter(id); 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("class_declaration",3, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -387,6 +403,9 @@ class CUP$LexParse$actions {
           case 12: // field_declaration ::= primitive_type IDENTIFIER SEMICOLON 
             {
               Object RESULT =null;
+		int idleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).right;
+		java.lang.String id = (java.lang.String)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).value;
 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("field_declaration",7, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
@@ -405,6 +424,9 @@ class CUP$LexParse$actions {
           case 14: // method_header ::= primitive_type IDENTIFIER LPAREN method_parameter_list_opt RPAREN 
             {
               Object RESULT =null;
+		int idleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).right;
+		java.lang.String id = (java.lang.String)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).value;
 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("method_header",29, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-4)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
@@ -414,6 +436,9 @@ class CUP$LexParse$actions {
           case 15: // method_header ::= VOID IDENTIFIER LPAREN method_parameter_list_opt RPAREN 
             {
               Object RESULT =null;
+		int idleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).right;
+		java.lang.String id = (java.lang.String)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).value;
 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("method_header",29, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-4)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
@@ -557,7 +582,7 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 31: // method_invocation ::= IDENTIFIER LPAREN argument_list_opt RPAREN 
             {
-              Object RESULT =null;
+              Operand RESULT =null;
 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("method_invocation",22, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
@@ -621,7 +646,13 @@ class CUP$LexParse$actions {
           case 38: // assignment_statement ::= IDENTIFIER EQ expression SEMICOLON 
             {
               Object RESULT =null;
-
+		int idleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).right;
+		java.lang.String id = (java.lang.String)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)).value;
+		int eleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).right;
+		Operand e = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)).value;
+		 program.generateAssignment(id, e); 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("assignment_statement",16, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-3)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -629,8 +660,11 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 39: // unary_expression ::= literal 
             {
-              Object RESULT =null;
-
+              Operand RESULT =null;
+		int lleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).left;
+		int lright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).right;
+		Operand l = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.peek()).value;
+		 RESULT = l; 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("unary_expression",26, ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -638,8 +672,8 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 40: // unary_expression ::= method_invocation 
             {
-              Object RESULT =null;
-
+              Operand RESULT =null;
+		 RESULT = new Operand(""); 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("unary_expression",26, ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -647,8 +681,11 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 41: // unary_expression ::= IDENTIFIER 
             {
-              Object RESULT =null;
-
+              Operand RESULT =null;
+		int idleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).left;
+		int idright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).right;
+		java.lang.String id = (java.lang.String)((java_cup.runtime.Symbol) CUP$LexParse$stack.peek()).value;
+		 RESULT = program.lookup(id); 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("unary_expression",26, ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -656,8 +693,11 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 42: // unary_expression ::= NOT unary_expression 
             {
-              Object RESULT =null;
-
+              Operand RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).right;
+		Operand e = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.peek()).value;
+		 RESULT = program.generateUnaryOp("!", e); 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("unary_expression",26, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-1)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -665,8 +705,11 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 43: // multiplicative_expression ::= unary_expression 
             {
-              Object RESULT =null;
-
+              Operand RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).right;
+		Operand e = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.peek()).value;
+		 RESULT = e; 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("multiplicative_expression",27, ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -674,8 +717,14 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 44: // multiplicative_expression ::= multiplicative_expression MULT unary_expression 
             {
-              Object RESULT =null;
-
+              Operand RESULT =null;
+		int firstleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).left;
+		int firstright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).right;
+		Operand first = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).value;
+		int secondleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).left;
+		int secondright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).right;
+		Operand second = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.peek()).value;
+		 RESULT = program.generateBinaryOp("*", first, second); 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("multiplicative_expression",27, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -683,8 +732,11 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 45: // additive_expression ::= multiplicative_expression 
             {
-              Object RESULT =null;
-
+              Operand RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).right;
+		Operand e = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.peek()).value;
+		 RESULT = e; 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("additive_expression",28, ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -692,8 +744,14 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 46: // additive_expression ::= additive_expression PLUS multiplicative_expression 
             {
-              Object RESULT =null;
-
+              Operand RESULT =null;
+		int firstleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).left;
+		int firstright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).right;
+		Operand first = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).value;
+		int secondleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).left;
+		int secondright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).right;
+		Operand second = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.peek()).value;
+		 RESULT = program.generateBinaryOp("+", first, second); 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("additive_expression",28, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -701,8 +759,11 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 47: // equality_expression ::= additive_expression 
             {
-              Object RESULT =null;
-
+              Operand RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).right;
+		Operand e = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.peek()).value;
+		 RESULT = e; 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("equality_expression",23, ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -710,8 +771,14 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 48: // equality_expression ::= equality_expression EQEQ additive_expression 
             {
-              Object RESULT =null;
-
+              Operand RESULT =null;
+		int firstleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).left;
+		int firstright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).right;
+		Operand first = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).value;
+		int secondleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).left;
+		int secondright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).right;
+		Operand second = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.peek()).value;
+		 RESULT = program.generateBinaryOp("==", first, second); 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("equality_expression",23, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -719,8 +786,14 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 49: // equality_expression ::= equality_expression NOTEQ additive_expression 
             {
-              Object RESULT =null;
-
+              Operand RESULT =null;
+		int firstleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).left;
+		int firstright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).right;
+		Operand first = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).value;
+		int secondleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).left;
+		int secondright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).right;
+		Operand second = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.peek()).value;
+		 RESULT = program.generateBinaryOp("!=", first, second); 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("equality_expression",23, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -728,8 +801,11 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 50: // boolean_and_expression ::= equality_expression 
             {
-              Object RESULT =null;
-
+              Operand RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).right;
+		Operand e = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.peek()).value;
+		 RESULT = e; 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("boolean_and_expression",25, ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -737,8 +813,14 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 51: // boolean_and_expression ::= boolean_and_expression AND equality_expression 
             {
-              Object RESULT =null;
-
+              Operand RESULT =null;
+		int firstleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).left;
+		int firstright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).right;
+		Operand first = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).value;
+		int secondleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).left;
+		int secondright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).right;
+		Operand second = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.peek()).value;
+		 RESULT = program.generateBinaryOp("&&", first, second); 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("boolean_and_expression",25, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -746,8 +828,11 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 52: // boolean_expression ::= boolean_and_expression 
             {
-              Object RESULT =null;
-
+              Operand RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).right;
+		Operand e = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.peek()).value;
+		 RESULT = e; 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("boolean_expression",24, ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -755,8 +840,14 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 53: // boolean_expression ::= boolean_expression OR boolean_and_expression 
             {
-              Object RESULT =null;
-
+              Operand RESULT =null;
+		int firstleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).left;
+		int firstright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).right;
+		Operand first = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)).value;
+		int secondleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).left;
+		int secondright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).right;
+		Operand second = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.peek()).value;
+		 RESULT = program.generateBinaryOp("||", first, second); 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("boolean_expression",24, ((java_cup.runtime.Symbol)CUP$LexParse$stack.elementAt(CUP$LexParse$top-2)), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
@@ -764,8 +855,11 @@ class CUP$LexParse$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 54: // expression ::= boolean_expression 
             {
-              Object RESULT =null;
-
+              Operand RESULT =null;
+		int eleft = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()).right;
+		Operand e = (Operand)((java_cup.runtime.Symbol) CUP$LexParse$stack.peek()).value;
+		 RESULT = e; 
               CUP$LexParse$result = parser.getSymbolFactory().newSymbol("expression",18, ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), ((java_cup.runtime.Symbol)CUP$LexParse$stack.peek()), RESULT);
             }
           return CUP$LexParse$result;
